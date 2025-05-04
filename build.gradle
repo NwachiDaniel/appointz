@@ -1,0 +1,53 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'io.freefair.lombok' version '8.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Core Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Database
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'com.h2database:h2' // for dev/test, optional
+
+	// HTMX for dynamic frontend (if actively used)
+	implementation 'io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1'
+
+	// Lombok (compile + test scope)
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// Testing
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+	// Password encoder
+	implementation 'org.springframework.security:spring-security-crypto'
+	
+	// Integration test (if you're writing Spring Integration tests)
+	// testImplementation 'org.springframework.integration:spring-integration-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
